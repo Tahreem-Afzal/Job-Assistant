@@ -5,7 +5,7 @@ import JobCard from "../components/JobCard";
 export default function Search() {
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("");
-  const [country, setCountry] = useState("pk");
+  const [country, setCountry] = useState("all");
   const [jobs, setJobs] = useState<JobResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
@@ -68,11 +68,18 @@ export default function Search() {
           style={{ maxWidth: 200 }}
         />
         <select value={country} onChange={(e) => setCountry(e.target.value)}>
+          <option value="all">All countries</option>
           <option value="pk">Pakistan</option>
           <option value="gb">UK</option>
-          <option value="us">US</option>
+          <option value="us">USA</option>
           <option value="de">Germany</option>
           <option value="ca">Canada</option>
+          <option value="au">Australia</option>
+          <option value="nl">Netherlands</option>
+          <option value="fr">France</option>
+          <option value="ae">UAE</option>
+          <option value="sg">Singapore</option>
+          <option value="in">India</option>
         </select>
         <button className="btn btn-primary" type="submit" disabled={loading}>
           {loading ? "Searching..." : "Search"}
