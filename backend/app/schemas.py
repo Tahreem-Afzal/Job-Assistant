@@ -137,3 +137,60 @@ class CoverLetterResponse(BaseModel):
 class MatchExplainRequest(BaseModel):
     job_title: str
     job_description: str
+
+
+# ---------- Scholarships (external + curated, not fully DB-backed) ----------
+class ScholarshipResult(BaseModel):
+    source: str  # "curated" | "scholarshipapi"
+    external_id: str
+    name: str
+    provider: Optional[str] = None
+    country: Optional[str] = None
+    degree_levels: List[str] = []
+    fields_of_study: List[str] = []
+    funding_type: Optional[str] = None
+    deadline: Optional[str] = None
+    url: Optional[str] = None
+    description: Optional[str] = None
+    match_score: Optional[float] = None
+    match_reason: Optional[str] = None
+
+
+class ScholarshipSearchParams(BaseModel):
+    query: str = ""
+    country: Optional[str] = None
+    degree_level: Optional[str] = None
+    field_of_study: Optional[str] = None
+
+
+class SavedScholarshipCreate(BaseModel):
+    source: str
+    external_id: str
+    name: str
+    provider: Optional[str] = None
+    country: Optional[str] = None
+    url: Optional[str] = None
+    description: Optional[str] = None
+    deadline: Optional[str] = None
+
+
+class SavedScholarshipUpdate(BaseModel):
+    status: Optional[str] = None
+    notes: Optional[str] = None
+
+
+class SavedScholarshipOut(BaseModel):
+    id: str
+    source: str
+    external_id: str
+    name: str
+    provider: Optional[str] = None
+    country: Optional[str] = None
+    url: Optional[str] = None
+    description: Optional[str] = None
+    deadline: Optional[str] = None
+    status: str
+    notes: Optional[str] = None
+
+    class Config:
+        from_attributes = True

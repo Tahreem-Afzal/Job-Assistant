@@ -75,3 +75,23 @@ class SavedJob(Base):
     created_at = Column(DateTime, default=dt.datetime.utcnow)
 
     user = relationship("User", back_populates="saved_jobs")
+
+
+class SavedScholarship(Base):
+    __tablename__ = "saved_scholarships"
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    user_id = Column(String, ForeignKey("users.id"), nullable=False)
+
+    source = Column(String, nullable=False)  # "curated" | "scholarshipapi"
+    external_id = Column(String, nullable=False)
+    name = Column(String, nullable=False)
+    provider = Column(String, nullable=True)
+    country = Column(String, nullable=True)
+    url = Column(String, nullable=True)
+    description = Column(Text, nullable=True)
+    deadline = Column(String, nullable=True)
+
+    status = Column(String, default="saved")  # saved | applied | submitted | awarded | rejected
+    notes = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=dt.datetime.utcnow)

@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
+import Scholarships from "./pages/Scholarships";
 import Saved from "./pages/Saved";
 import Profile from "./pages/Profile";
 import Resume from "./pages/Resume";
@@ -28,6 +29,14 @@ function AppRoutes() {
             element={
               <ProtectedRoute>
                 <Search />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/scholarships"
+            element={
+              <ProtectedRoute>
+                <Scholarships />
               </ProtectedRoute>
             }
           />

@@ -17,6 +17,9 @@ export default function Navbar() {
         <NavLink to="/search" className={({ isActive }) => (isActive ? "active" : "")}>
           Search
         </NavLink>
+        <NavLink to="/scholarships" className={({ isActive }) => (isActive ? "active" : "")}>
+          Scholarships
+        </NavLink>
         <NavLink to="/saved" className={({ isActive }) => (isActive ? "active" : "")}>
           Saved
         </NavLink>

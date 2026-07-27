@@ -119,3 +119,52 @@ export const generateCoverLetter = (data: {
   job_description: string;
   tone?: string;
 }) => api.post<{ cover_letter: string }>("/ai/cover-letter", data);
+
+// ---------- Scholarships ----------
+export interface ScholarshipResult {
+  source: string;
+  external_id: string;
+  name: string;
+  provider?: string;
+  country?: string;
+  degree_levels: string[];
+  fields_of_study: string[];
+  funding_type?: string;
+  deadline?: string;
+  url?: string;
+  description?: string;
+  match_score?: number;
+  match_reason?: string;
+}
+
+export interface SavedScholarship {
+  id: string;
+  source: string;
+  external_id: string;
+  name: string;
+  provider?: string;
+  country?: string;
+  url?: string;
+  description?: string;
+  deadline?: string;
+  status: string;
+  notes?: string;
+}
+
+export const searchScholarships = (params: {
+  q?: string;
+  country?: string;
+  degree_level?: string;
+  field_of_study?: string;
+}) => api.get<ScholarshipResult[]>("/scholarships/search", { params });
+
+export const listSavedScholarships = (status?: string) =>
+  api.get<SavedScholarship[]>("/saved-scholarships", { params: status ? { status } : {} });
+
+export const saveScholarship = (scholarship: Partial<SavedScholarship>) =>
+  api.post<SavedScholarship>("/saved-scholarships", scholarship);
+
+export const updateSavedScholarship = (id: string, data: { status?: string; notes?: string }) =>
+  api.patch<SavedScholarship>(`/saved-scholarships/${id}`, data);
+
+export const deleteSavedScholarship = (id: string) => api.delete(`/saved-scholarships/${id}`);

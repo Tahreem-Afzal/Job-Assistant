@@ -18,6 +18,10 @@ class Settings(BaseSettings):
     adzuna_app_id: str = ""
     adzuna_app_key: str = ""
     jooble_api_key: str = ""
+    findwork_api_key: str = ""
+
+    # Scholarship data providers
+    scholarship_api_key: str = ""
 
     # Google Sign-In
     google_client_id: str = ""
