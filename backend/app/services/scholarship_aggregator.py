@@ -21,8 +21,23 @@ def _matches(scholarship: ScholarshipResult, params: ScholarshipSearchParams) ->
         ]
     ).lower()
 
-    if params.query and params.query.lower() not in text:
-        return False
+    fields_lower = [f.lower() for f in scholarship.fields_of_study]
+    covers_all_subjects = any("all subjects" in f for f in fields_lower)
+
+    if params.query:
+        # Split into meaningful words (3+ chars) and match if ANY word hits,
+        # rather than requiring the whole phrase verbatim - "masters in
+        # artificial intelligence" should still surface general scholarships
+        # that fund any field, not just ones that literally say "AI".
+        words = [w for w in params.query.lower().split() if len(w) >= 3]
+        stopwords = {"the", "and", "for", "with", "masters", "master's", "bachelors",
+                     "bachelor's", "phd", "degree", "study", "studies", "program", "programme"}
+        meaningful_words = [w for w in words if w not in stopwords]
+
+        query_hit = any(w in text for w in (meaningful_words or words))
+        if not query_hit and not covers_all_subjects:
+            return False
+
     if params.country and params.country.lower() not in (scholarship.country or "").lower():
         return False
     if params.degree_level and params.degree_level.lower() not in [
@@ -31,7 +46,7 @@ def _matches(scholarship: ScholarshipResult, params: ScholarshipSearchParams) ->
         return False
     if params.field_of_study:
         field_lower = params.field_of_study.lower()
-        if not any(field_lower in f.lower() for f in scholarship.fields_of_study):
+        if not covers_all_subjects and not any(field_lower in f for f in fields_lower):
             return False
     return True
 
