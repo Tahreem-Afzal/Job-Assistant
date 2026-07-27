@@ -1,0 +1,14 @@
+﻿.env
+backend/.env
+frontend/.env
+venv/
+__pycache__/
+*.pyc
+*.db
+backend/dev.db
+backend/test.db
+node_modules/
+frontend/dist/
+.vscode/
+.DS_Store
+Thumbs.db

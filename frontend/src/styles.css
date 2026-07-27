@@ -1,0 +1,362 @@
+:root {
+  --ink: #12172B;
+  --ink-raised: #1B2140;
+  --ink-raised-2: #232A4D;
+  --slate: #323B63;
+  --gold: #D4A537;
+  --gold-soft: #E8C878;
+  --paper: #F1EEE5;
+  --muted: #9098BE;
+  --success: #5B8C6E;
+  --danger: #C1583F;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+a { color: var(--gold-soft); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+button, input, select, textarea {
+  font-family: var(--font-body);
+}
+
+/* ---------- Layout ---------- */
+.app-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+  border-bottom: 1px solid var(--slate);
+  background: var(--ink);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar .brand {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar .brand .mark {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212, 165, 55, 0.2);
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.nav-links a.active, .nav-links a:hover {
+  color: var(--paper);
+  text-decoration: none;
+}
+
+.main-content {
+  flex: 1;
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: #1a1200;
+}
+.btn-primary:hover { background: var(--gold-soft); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--slate);
+  color: var(--paper);
+}
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold-soft); }
+
+.btn-sm { padding: 6px 12px; font-size: 13px; }
+
+/* ---------- Forms ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.field label {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.field input, .field select, .field textarea {
+  background: var(--ink-raised);
+  border: 1px solid var(--slate);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--paper);
+  font-size: 14px;
+  outline: none;
+}
+
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--gold);
+}
+
+.auth-card {
+  max-width: 400px;
+  margin: 60px auto;
+  background: var(--ink-raised);
+  border: 1px solid var(--slate);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.error-text {
+  color: var(--danger);
+  font-size: 13px;
+  margin-top: -8px;
+  margin-bottom: 12px;
+}
+
+/* ---------- Job cards ---------- */
+.search-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.search-bar input, .search-bar select {
+  background: var(--ink-raised);
+  border: 1px solid var(--slate);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: var(--paper);
+  font-size: 14px;
+}
+.search-bar input[type="text"] { flex: 1; min-width: 200px; }
+
+.job-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.job-card {
+  display: flex;
+  gap: 20px;
+  background: var(--ink-raised);
+  border: 1px solid var(--slate);
+  border-radius: 14px;
+  padding: 20px;
+  align-items: flex-start;
+}
+
+.job-card .job-main { flex: 1; min-width: 0; }
+
+.job-card h3 { font-size: 17px; margin-bottom: 4px; }
+.job-card .job-meta {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.job-card .job-desc {
+  color: var(--paper);
+  opacity: 0.75;
+  font-size: 13.5px;
+  line-height: 1.5;
+  max-height: 4.5em;
+  overflow: hidden;
+}
+.job-card .job-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+.job-card .job-source {
+  display: inline-block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gold-soft);
+  background: rgba(212, 165, 55, 0.12);
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin-bottom: 8px;
+}
+
+/* Compass-style match score ring - signature element */
+.match-compass {
+  flex-shrink: 0;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-family: var(--font-display);
+}
+.match-compass svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+.match-compass .score-value {
+  font-size: 17px;
+  font-weight: 700;
+  z-index: 1;
+}
+.match-compass .score-label {
+  position: absolute;
+  bottom: -18px;
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ---------- Status trail (real sequence: saved -> applied -> interview -> offer) ---------- */
+.status-trail {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+}
+.status-trail .step {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 100px;
+  border: 1px solid var(--slate);
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+}
+.status-trail .step.active {
+  border-color: var(--gold);
+  color: var(--gold-soft);
+  background: rgba(212, 165, 55, 0.1);
+}
+.status-trail .step.rejected {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* ---------- Profile form ---------- */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--ink-raised-2);
+  border: 1px solid var(--slate);
+  border-radius: 100px;
+  padding: 5px 12px;
+  font-size: 13px;
+}
+.chip button {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.section-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold-soft);
+  margin-bottom: 12px;
+  margin-top: 32px;
+}
+.section-title:first-child { margin-top: 0; }
+
+/* ---------- Cover letter ---------- */
+.letter-output {
+  background: var(--ink-raised);
+  border: 1px solid var(--slate);
+  border-radius: 12px;
+  padding: 20px;
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 20px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  padding: 60px 20px;
+  font-size: 14px;
+}
+
+.page-header {
+  margin-bottom: 28px;
+}
+.page-header p {
+  color: var(--muted);
+  margin-top: 6px;
+  font-size: 14px;
+}

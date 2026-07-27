@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/api/client.ts","./src/components/JobCard.tsx","./src/components/Navbar.tsx","./src/context/AuthContext.tsx","./src/pages/Login.tsx","./src/pages/Profile.tsx","./src/pages/Register.tsx","./src/pages/Resume.tsx","./src/pages/Saved.tsx","./src/pages/Search.tsx"],"version":"5.9.3"}
