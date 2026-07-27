@@ -20,6 +20,9 @@ export default function Navbar() {
         <NavLink to="/scholarships" className={({ isActive }) => (isActive ? "active" : "")}>
           Scholarships
         </NavLink>
+        <NavLink to="/inbox" className={({ isActive }) => (isActive ? "active" : "")}>
+          Inbox
+        </NavLink>
         <NavLink to="/saved" className={({ isActive }) => (isActive ? "active" : "")}>
           Saved
         </NavLink>

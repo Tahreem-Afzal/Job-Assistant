@@ -95,3 +95,17 @@ class SavedScholarship(Base):
     status = Column(String, default="saved")  # saved | applied | submitted | awarded | rejected
     notes = Column(Text, nullable=True)
     created_at = Column(DateTime, default=dt.datetime.utcnow)
+
+
+class GmailConnection(Base):
+    __tablename__ = "gmail_connections"
+
+    id = Column(String, primary_key=True, default=gen_uuid)
+    user_id = Column(String, ForeignKey("users.id"), unique=True, nullable=False)
+
+    email_address = Column(String, nullable=True)
+    access_token = Column(Text, nullable=False)
+    refresh_token = Column(Text, nullable=True)
+    token_expiry = Column(DateTime, nullable=True)
+
+    connected_at = Column(DateTime, default=dt.datetime.utcnow)

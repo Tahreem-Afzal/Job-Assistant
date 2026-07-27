@@ -4,7 +4,7 @@ from pydantic import BaseModel, EmailStr
 
 # ---------- Auth ----------
 class GoogleAuthRequest(BaseModel):
-    credential: str  # the ID token returned by Google Identity Services
+    credential: str
 
 
 class UserCreate(BaseModel):
@@ -141,7 +141,7 @@ class MatchExplainRequest(BaseModel):
 
 # ---------- Scholarships (external + curated, not fully DB-backed) ----------
 class ScholarshipResult(BaseModel):
-    source: str  # "curated" | "scholarshipapi"
+    source: str
     external_id: str
     name: str
     provider: Optional[str] = None
@@ -194,3 +194,32 @@ class SavedScholarshipOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+# ---------- Gmail (read-only, draft-only - no auto-send) ----------
+class GmailConnectionStatus(BaseModel):
+    connected: bool
+    email_address: Optional[str] = None
+
+
+class GmailAuthUrl(BaseModel):
+    auth_url: str
+
+
+class GmailMessageSummary(BaseModel):
+    id: str
+    thread_id: str
+    subject: str
+    sender: str
+    snippet: str
+    received_at: Optional[str] = None
+    category: str
+
+
+class DraftReplyRequest(BaseModel):
+    message_id: str
+    tone: Optional[str] = "professional"
+
+
+class DraftReplyResponse(BaseModel):
+    draft_reply: str

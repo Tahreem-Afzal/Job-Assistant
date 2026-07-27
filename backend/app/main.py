@@ -3,10 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
 from app.config import settings
-from app.routers import auth, profile, jobs, saved, ai, scholarships, saved_scholarships
+from app.routers import auth, profile, jobs, saved, ai, scholarships, saved_scholarships, gmail
 
-# Creates tables if they don't exist. For real migrations, use Alembic instead
-# (a starter alembic setup can be added once the schema stabilizes).
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -30,6 +28,7 @@ app.include_router(saved.router)
 app.include_router(ai.router)
 app.include_router(scholarships.router)
 app.include_router(saved_scholarships.router)
+app.include_router(gmail.router)
 
 
 @app.get("/health")

@@ -168,3 +168,29 @@ export const updateSavedScholarship = (id: string, data: { status?: string; note
   api.patch<SavedScholarship>(`/saved-scholarships/${id}`, data);
 
 export const deleteSavedScholarship = (id: string) => api.delete(`/saved-scholarships/${id}`);
+// ---------- Gmail ----------
+export interface GmailStatus {
+  connected: boolean;
+  email_address?: string;
+}
+
+export interface GmailMessage {
+  id: string;
+  thread_id: string;
+  subject: string;
+  sender: string;
+  snippet: string;
+  received_at?: string;
+  category: string;
+}
+
+export const getGmailStatus = () => api.get<GmailStatus>("/gmail/status");
+
+export const getGmailConnectUrl = () => api.get<{ auth_url: string }>("/gmail/connect");
+
+export const listGmailMessages = () => api.get<GmailMessage[]>("/gmail/messages");
+
+export const draftGmailReply = (data: { message_id: string; tone?: string }) =>
+  api.post<{ draft_reply: string }>("/gmail/draft-reply", data);
+
+export const disconnectGmail = () => api.delete("/gmail/disconnect");

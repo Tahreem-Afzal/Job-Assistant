@@ -23,8 +23,14 @@ class Settings(BaseSettings):
     # Scholarship data providers
     scholarship_api_key: str = ""
 
-    # Google Sign-In
+    # Google Sign-In (Identity Services - no secret needed for this)
     google_client_id: str = ""
+
+    # Gmail read-only integration (needs a confidential OAuth client + secret,
+    # since reading Gmail requires a real server-side token exchange, unlike
+    # the Sign-In flow above). Same Google Cloud project, different client.
+    google_client_secret: str = ""
+    gmail_redirect_uri: str = "http://localhost:8000/gmail/callback"
 
     # AI provider (stubbed for now - plug in Groq/OpenAI/etc later)
     ai_provider: str = "stub"  # "groq" | "openai" | "stub"

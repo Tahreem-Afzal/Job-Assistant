@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
 import Scholarships from "./pages/Scholarships";
+import Inbox from "./pages/Inbox";
 import Saved from "./pages/Saved";
 import Profile from "./pages/Profile";
 import Resume from "./pages/Resume";
@@ -37,6 +38,14 @@ function AppRoutes() {
             element={
               <ProtectedRoute>
                 <Scholarships />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/inbox"
+            element={
+              <ProtectedRoute>
+                <Inbox />
               </ProtectedRoute>
             }
           />

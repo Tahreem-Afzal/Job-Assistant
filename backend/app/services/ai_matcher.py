@@ -91,3 +91,46 @@ def generate_cover_letter(
             f"Sincerely,\n{profile.headline if profile else 'Candidate'}"
         )
     return result
+
+def categorize_email(subject: str, snippet: str) -> str:
+    """
+    Classifies an email into one of: recruiter_response, interview_invite,
+    scholarship_decision, other. Stub uses keyword heuristics; swap for an
+    LLM call via _call_llm once a real provider is configured, keeping the
+    same string return values so callers don't change.
+    """
+    text = f"{subject} {snippet}".lower()
+
+    interview_words = ["interview", "schedule a call", "meet with", "next steps", "available for a call"]
+    scholarship_words = ["scholarship", "fellowship", "funding decision", "award notification", "admission decision"]
+    recruiter_words = ["your application", "position", "role", "recruiter", "hiring", "candidate", "resume", "cv"]
+
+    if any(w in text for w in interview_words):
+        return "interview_invite"
+    if any(w in text for w in scholarship_words):
+        return "scholarship_decision"
+    if any(w in text for w in recruiter_words):
+        return "recruiter_response"
+    return "other"
+
+
+def generate_email_reply(subject: str, body: str, tone: str = "professional") -> str:
+    """
+    Drafts a suggested reply for the person to review and send themselves.
+    This app never sends email automatically - draft-only, always.
+    """
+    prompt = (
+        f"Write a {tone} email reply to the following message. Keep it concise "
+        f"(3-5 sentences), and leave placeholders in [brackets] for anything "
+        f"you can't know (like specific dates or names).\n\n"
+        f"Subject: {subject}\n\nMessage:\n{body}\n"
+    )
+    result = _call_llm(prompt)
+
+    if result.startswith("[AI generation not yet configured"):
+        return (
+            f"Hi,\n\nThank you for your email regarding \"{subject}\". "
+            f"[Draft reply will appear here once an AI provider (e.g. Groq) is configured "
+            f"in the backend .env - see AI_PROVIDER/AI_API_KEY]\n\nBest regards,\n[Your name]"
+        )
+    return result
