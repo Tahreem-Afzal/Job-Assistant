@@ -1,11 +1,10 @@
 """
 AI matching + generation layer.
 
-Currently STUBBED with a transparent keyword-overlap heuristic so the rest of
-the app is fully testable without an LLM key. Swap `settings.ai_provider` to
-"groq" or "openai" and fill in the real calls in `_call_llm` when ready -
-every function signature below stays the same, so nothing else in the app
-needs to change.
+Set AI_PROVIDER=groq and AI_API_KEY in .env to enable real AI-generated
+cover letters. Without it (AI_PROVIDER=stub), everything still works using
+a transparent keyword-overlap heuristic for matching and a template
+placeholder for cover letters - useful for testing without any API key.
 """
 from typing import Optional
 
@@ -15,20 +14,21 @@ from app.schemas import JobResult
 
 
 def _call_llm(prompt: str) -> str:
-    """Single choke point for all LLM calls. Replace body when wiring a real provider."""
+    """Single choke point for all LLM calls."""
     if settings.ai_provider == "stub" or not settings.ai_api_key:
         return "[AI generation not yet configured - set AI_PROVIDER and AI_API_KEY in .env]"
 
     if settings.ai_provider == "groq":
-        # Example (uncomment + add `groq` to requirements.txt):
-        # from groq import Groq
-        # client = Groq(api_key=settings.ai_api_key)
-        # resp = client.chat.completions.create(
-        #     model="llama-3.3-70b-versatile",
-        #     messages=[{"role": "user", "content": prompt}],
-        # )
-        # return resp.choices[0].message.content
-        raise NotImplementedError("Wire up Groq client here")
+        from groq import Groq
+
+        client = Groq(api_key=settings.ai_api_key)
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.7,
+            max_tokens=800,
+        )
+        return response.choices[0].message.content
 
     if settings.ai_provider == "openai":
         raise NotImplementedError("Wire up OpenAI client here")
